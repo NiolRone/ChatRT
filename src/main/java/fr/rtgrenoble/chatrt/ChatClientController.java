@@ -36,9 +36,11 @@ public class ChatClientController implements Initializable {
     private static final String HOST_PORT_REGEX = "^([-.a-zA-Z0-9]+)(?::([0-9]{1,5}))?$";
     private final Pattern hostPortPattern = Pattern.compile(HOST_PORT_REGEX);
     private Image avatars;
+    private ResourceBundle resourceBundle;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.resourceBundle = resourceBundle;
         hostPortTextField.disableProperty().bind(connectionButton.selectedProperty());
         sendButton.disableProperty().bind(connectionButton.selectedProperty().not());
 
@@ -62,7 +64,7 @@ public class ChatClientController implements Initializable {
         if (connectionButton.isSelected()) {
             Matcher matcher = hostPortPattern.matcher(hostPortTextField.getText());
             if (nicknameTextField.getText().isBlank()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Pseudo obligatoire", ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.PseudoAlerte"), ButtonType.OK);
                 connectionButton.setSelected(false);
                 alert.showAndWait();
                 return;

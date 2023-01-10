@@ -6,13 +6,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ChatClientApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ChatClientApplication.class.getResource("chatclient-view.fxml"));
+        ResourceBundle i18nBundle = ResourceBundle.getBundle("fr.rtgrenoble.chatrt.i18nBundle", Locale.getDefault());
+        FXMLLoader fxmlLoader = new FXMLLoader(ChatClientApplication.class.getResource("chatclient-view.fxml"), i18nBundle);
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        stage.setTitle("ChatRT");
         stage.setScene(scene);
         stage.show();
     }

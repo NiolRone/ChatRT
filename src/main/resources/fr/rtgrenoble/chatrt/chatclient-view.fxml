@@ -28,8 +28,8 @@
           <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Serveur (IP:port) :  " GridPane.halignment="RIGHT" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <Label minWidth="-Infinity" text="pseudo : " GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label text="%key.PortLabel" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <Label minWidth="-Infinity" text="%key.NicknameLabel" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <TextField fx:id="hostPortTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -38,13 +38,13 @@
                <GridPane.margin>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </GridPane.margin></TextField>
-            <ToggleButton fx:id="connectionButton" maxHeight="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" text="Connexion" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <ToggleButton fx:id="connectionButton" maxHeight="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" text="%key.ConnectionButtonLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
       <ListView fx:id="chatListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
       <HBox prefHeight="1.0" prefWidth="300.0">
          <children>
-            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" minWidth="-Infinity" text="Message :" HBox.hgrow="ALWAYS">
+            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" minWidth="-Infinity" text="%key.MessageLabel" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
@@ -54,7 +54,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="sendButton" mnemonicParsing="false" text="Envoyer" HBox.hgrow="ALWAYS">
+            <Button fx:id="sendButton" mnemonicParsing="false" text="%key.SendButtonLabel" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
