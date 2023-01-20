@@ -4,12 +4,17 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 /**
  * Programme serveur qui renvoie les chaines de caractères lues jusqu'à recevoir le message "fin"
  */
 public class ChatServerTCP {
+
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle("fr.rtgrenoble.chatrt.i18nBundle");
 
     private Vector<ClientConnection> clientList;
 
@@ -45,8 +50,7 @@ public class ChatServerTCP {
 
                 ClientConnection client = new ClientConnection(sock);
                 clientList.add(client);
-                sendAllOtherClients(client,"Serveur|Connexion de :" + client.myIpPort);
-                client.send("Serveur|Bienvenue " + client.myIpPort );
+                sendAllOtherClients(client,"Serveur|"+ this.resourceBundle.getString("key.AnotherConnection") + client.myIpPort);
 
                 Thread t = new Thread(client);
                 t.start();
@@ -121,7 +125,7 @@ public class ChatServerTCP {
 
             System.out.println("Fermeture de la connexion");
             clientList.remove(this);
-            sendAllOtherClients(this,"Serveur|Deconnexion de :" + this.myIpPort);
+            sendAllOtherClients(this,"Serveur|" + resourceBundle.getString("key.AnotherDisconnection") + this.myIpPort);
 
             try {
                 sock.close();

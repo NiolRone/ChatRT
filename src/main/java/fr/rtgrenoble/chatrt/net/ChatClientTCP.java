@@ -28,8 +28,8 @@ public class ChatClientTCP extends ChatClient {
 
     @Override
     protected Message receive() throws IOException {
-        //String format = "^([-.a-zA-Z0-9 ]+)\\|([-.a-zA-Z0-9- :]+)$";
-        String format = "^(.+)\\|(.*)$";
+        String format = "^([-.a-zA-Z0-9 _]+)\\|([-.a-zA-Z0-9- :',;?!()*=+_]+)$";
+        //String format = "^(.+)\\|(.*)$";
         Pattern pattern = Pattern.compile(format);
         String line = in.readLine();
         Matcher matcher = pattern.matcher(line);

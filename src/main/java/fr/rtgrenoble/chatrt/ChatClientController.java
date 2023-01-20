@@ -64,13 +64,13 @@ public class ChatClientController implements Initializable {
         if (connectionButton.isSelected()) {
             Matcher matcher = hostPortPattern.matcher(hostPortTextField.getText());
             if (nicknameTextField.getText().isBlank()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.PseudoAlerte"), ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.NicknameAlert"), ButtonType.OK);
                 connectionButton.setSelected(false);
                 alert.showAndWait();
                 return;
             }
             if (!matcher.matches()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Format de l'hôte incorrect", ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.HostAlert"), ButtonType.OK);
                 connectionButton.setSelected(false);
                 alert.showAndWait();
                 return;
@@ -85,21 +85,22 @@ public class ChatClientController implements Initializable {
 
         } else {
             connectionButton.setText("Connexion");
-            this.disconnect("Vous vous êtes deconnecté");
+            this.disconnect(resourceBundle.getString("key.Disconnect"));
         }
 
     }
 
     private void handleSendMessage(ActionEvent actionEvent) {
         if (messageTextField.getText().isBlank()) {
-            System.out.println("Veuillez saisir un message");
+            Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.MessageAlert"), ButtonType.OK);
+            alert.showAndWait();
         } else {
             Message message = new Message(nicknameTextField.getText(), messageTextField.getText());
             this.appendMessage(message);
             try {
                 chatClient.send(message);
             } catch (IOException e) {
-                this.disconnect("Error");
+                this.disconnect(resourceBundle.getString("key.Disconnect"));
             }
             messageTextField.clear();
         }
@@ -119,7 +120,7 @@ public class ChatClientController implements Initializable {
     private void connect(String host, int port) {
         try {
             chatClient.connect(host, port, this::handleReceiveMessage);
-            this.appendMessage(new Message("system", "Connecté à %s:%d".formatted(host, port)));
+            this.appendMessage(new Message("system", resourceBundle.getString("key.Connection") +"%s:%d".formatted(host, port)));
         } catch (IOException e) {
             this.disconnect("Connexion à %s:%d impossible".formatted(host, port));
         }
