@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.rtgrenoble.chatrt.ChatClientController">
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.rtgrenoble.chatrt.ChatClientController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -61,17 +61,17 @@
             </Button>
          </children>
       </HBox>
-      <GridPane alignment="BOTTOM_CENTER" hgap="50.0" minHeight="-Infinity" minWidth="-Infinity">
+      <GridPane alignment="BOTTOM_CENTER" hgap="50.0" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS">
         <columnConstraints>
-          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints valignment="BOTTOM" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <Label prefHeight="0.0" prefWidth="210.0" text="Label" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
-            <Label minHeight="-Infinity" minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+            <Label fx:id="ChronoLabel" minHeight="-Infinity" minWidth="-Infinity" text="Status" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+            <Label fx:id="ClockLabel" minHeight="-Infinity" minWidth="-Infinity" text="Clock" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
          </children>
       </GridPane>
    </children>

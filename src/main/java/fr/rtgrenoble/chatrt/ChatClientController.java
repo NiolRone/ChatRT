@@ -3,6 +3,8 @@ package fr.rtgrenoble.chatrt;
 import fr.rtgrenoble.chatrt.net.ChatClient;
 import fr.rtgrenoble.chatrt.net.ChatClientTCP;
 import fr.rtgrenoble.chatrt.net.Message;
+import fr.rtgrenoble.chatrt.status.Chronometre;
+import fr.rtgrenoble.chatrt.status.Horloge;
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -20,6 +22,7 @@ import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -32,6 +35,8 @@ public class ChatClientController implements Initializable {
     public TextField messageTextField;
     public Button sendButton;
     public ListView chatListView;
+    public Label ChronoLabel;
+    public Label ClockLabel;
     private ChatClient chatClient;
     private static final String HOST_PORT_REGEX = "^([-.a-zA-Z0-9]+)(?::([0-9]{1,5}))?$";
     private final Pattern hostPortPattern = Pattern.compile(HOST_PORT_REGEX);
@@ -57,6 +62,13 @@ public class ChatClientController implements Initializable {
         TextFields.bindAutoCompletion(hostPortTextField, "mock", "localhost", "127.0.0.1:2022");
         chatListView.setCellFactory(lv -> new MessageListCell());
 
+        // Clock
+        Horloge horloge = new Horloge(ClockLabel);
+        Thread t = new Thread(horloge);
+        t.start();
+
+        //Status
+        ChronoLabel.setText(resourceBundle.getString("key.Disconnect"));
     }
 
     private void handleConnection(ActionEvent actionEvent) {
@@ -82,9 +94,14 @@ public class ChatClientController implements Initializable {
             chatClient = new ChatClientTCP();
             this.connect(host, port);
 
+            // Status
+            Chronometre chronometre = new Chronometre(ChronoLabel, String.format("%s:%d", host, port));
+            Thread t = new Thread(chronometre);
+            t.start();
 
         } else {
             connectionButton.setText("Connexion");
+            ChronoLabel.setText(resourceBundle.getString("key.Disconnect"));
             this.disconnect(resourceBundle.getString("key.Disconnect"));
         }
 
