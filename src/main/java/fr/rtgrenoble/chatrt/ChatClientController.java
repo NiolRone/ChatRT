@@ -35,13 +35,16 @@ public class ChatClientController implements Initializable {
     public TextField messageTextField;
     public Button sendButton;
     public ListView chatListView;
-    public Label ChronoLabel;
+    public Label chronoLabel;
     public Label ClockLabel;
     private ChatClient chatClient;
     private static final String HOST_PORT_REGEX = "^([-.a-zA-Z0-9]+)(?::([0-9]{1,5}))?$";
     private final Pattern hostPortPattern = Pattern.compile(HOST_PORT_REGEX);
     private Image avatars;
     private ResourceBundle resourceBundle;
+
+    public Chronometre chrono;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,8 +70,13 @@ public class ChatClientController implements Initializable {
         Thread t = new Thread(horloge);
         t.start();
 
-        //Status
-        ChronoLabel.setText(resourceBundle.getString("key.Disconnect"));
+        // Clock
+        Platform.runLater(() -> ClockLabel.getScene().getWindow().setOnCloseRequest(e -> horloge.stop()));
+
+        // Status
+        chronoLabel.setText(resourceBundle.getString("key.Disconnect"));
+
+
     }
 
     private void handleConnection(ActionEvent actionEvent) {
@@ -94,16 +102,12 @@ public class ChatClientController implements Initializable {
             chatClient = new ChatClientTCP();
             this.connect(host, port);
 
-            // Status
-            Chronometre chronometre = new Chronometre(ChronoLabel, String.format("%s:%d", host, port));
-            Thread t = new Thread(chronometre);
-            t.start();
-
         } else {
             connectionButton.setText("Connexion");
-            ChronoLabel.setText(resourceBundle.getString("key.Disconnect"));
             this.disconnect(resourceBundle.getString("key.Disconnect"));
+
         }
+
 
     }
 
@@ -138,9 +142,13 @@ public class ChatClientController implements Initializable {
         try {
             chatClient.connect(host, port, this::handleReceiveMessage);
             this.appendMessage(new Message("system", resourceBundle.getString("key.Connection") +"%s:%d".formatted(host, port)));
+            chrono = new Chronometre(chronoLabel, String.format("%s:%d", host, port));
+            Thread t = new Thread(chrono);
+            t.start();
         } catch (IOException e) {
             this.disconnect("Connexion à %s:%d impossible".formatted(host, port));
         }
+
     }
 
     private void handleReceiveMessage(Observable observable) {
@@ -151,11 +159,13 @@ public class ChatClientController implements Initializable {
     private void disconnect(String infoMessage) {
         if (chatClient.isConnected()) {
             try {
+                chrono.stop();
                 chatClient.disconnect();
             } catch (IOException e) {}
         }
         appendMessage(new Message("system", infoMessage));
         connectionButton.setSelected(false);
+
     }
 
     private ImageView getAvatar(String nickname) {

@@ -70,7 +70,7 @@
           <RowConstraints valignment="BOTTOM" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <Label fx:id="ChronoLabel" minHeight="-Infinity" minWidth="-Infinity" text="Status" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+            <Label fx:id="chronoLabel" minHeight="-Infinity" minWidth="-Infinity" text="Status" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
             <Label fx:id="ClockLabel" minHeight="-Infinity" minWidth="-Infinity" text="Clock" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
          </children>
       </GridPane>

@@ -4,22 +4,22 @@ import fr.rtgrenoble.chatrt.ChatClientController;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 
+import java.util.ResourceBundle;
+
 public class Chronometre implements Runnable{
-    public Label ChronoLabel;
+    public Label chronoLabel;
     public Long startTime;
     public String status;
-
     public boolean stop = false;
 
-    public Chronometre(Label ChronoLabel, String status) {
-        this.ChronoLabel = ChronoLabel;
-        this.startTime = System.currentTimeMillis();
+    public Chronometre(Label chronoLabel, String status) {
+        this.chronoLabel = chronoLabel;
         this.status = status;
     }
 
-
-    @Override
-    public void run() {
+    public void start() {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("fr.rtgrenoble.chatrt.i18nBundle");
+        startTime = System.currentTimeMillis();
         while (!stop) {
             try {
                 Thread.sleep(1000);
@@ -32,8 +32,18 @@ public class Chronometre implements Runnable{
             long minutes = (elapsedTime % 3600000) / 60000;
             long seconds = (elapsedTime % 60000) / 1000;
             String statusChrono = String.format("Connecté à %s depuis %02d:%02d:%02d", status, hours, minutes, seconds);
-            Platform.runLater(() -> ChronoLabel.setText(statusChrono));
-
+            Platform.runLater(() -> chronoLabel.setText(statusChrono));
         }
+        Platform.runLater(() -> chronoLabel.setText(resourceBundle.getString("key.Disconnect")));
+    }
+
+    public void stop() {
+        stop = true;
+    }
+
+
+    @Override
+    public void run() {
+        start();
     }
 }

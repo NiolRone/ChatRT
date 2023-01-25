@@ -14,6 +14,10 @@ public class Horloge implements Runnable{
     public Horloge(Label ClockLabel) {
         this.ClockLabel = ClockLabel;
     }
+
+    public void stop() {
+        stop = true;
+    }
     @Override
     public void run() {
         while (!stop) {
