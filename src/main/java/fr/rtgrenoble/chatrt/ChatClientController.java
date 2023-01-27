@@ -8,9 +8,11 @@ import fr.rtgrenoble.chatrt.status.Horloge;
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,90 +20,82 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
-import org.controlsfx.control.textfield.TextFields;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatClientController implements Initializable {
-    public TextField hostPortTextField;
     public TextField nicknameTextField;
     public ToggleButton connectionButton;
     public TextField messageTextField;
     public Button sendButton;
     public ListView chatListView;
     public Label chronoLabel;
-    public Label ClockLabel;
+    public Label clockLabel;
+    public ComboBox serverComboBox;
+    public MenuItem closeMenu;
+    public MenuItem addServer;
     private ChatClient chatClient;
-    private static final String HOST_PORT_REGEX = "^([-.a-zA-Z0-9]+)(?::([0-9]{1,5}))?$";
-    private final Pattern hostPortPattern = Pattern.compile(HOST_PORT_REGEX);
     private Image avatars;
     private ResourceBundle resourceBundle;
-
     public Chronometre chrono;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
-        hostPortTextField.disableProperty().bind(connectionButton.selectedProperty());
-        sendButton.disableProperty().bind(connectionButton.selectedProperty().not());
-
-        hostPortTextField.setTextFormatter(new TextFormatter<>(change -> {
-            Matcher matcher = hostPortPattern.matcher(change.getControlNewText());
-            return (matcher.matches() || matcher.hitEnd()) ? change : null;
-        }));
-
-        connectionButton.setOnAction(this::handleConnection);
-        sendButton.setOnAction(this::handleSendMessage);
-
         avatars = new Image(getClass().getResource("/img/avatars.png").toString());
 
-        TextFields.bindAutoCompletion(hostPortTextField, "mock", "localhost", "127.0.0.1:2022");
+        sendButton.disableProperty().bind(connectionButton.selectedProperty().not());
+
+        sendButton.setOnAction(this::handleSendMessage);
+        connectionButton.setOnAction(this::handleConnection);
         chatListView.setCellFactory(lv -> new MessageListCell());
 
         // Clock
-        Horloge horloge = new Horloge(ClockLabel);
+        Horloge horloge = new Horloge(clockLabel);
         Thread t = new Thread(horloge);
         t.start();
-
-        // Clock
-        Platform.runLater(() -> ClockLabel.getScene().getWindow().setOnCloseRequest(e -> horloge.stop()));
+        Platform.runLater(() -> clockLabel.getScene().getWindow().setOnCloseRequest(e -> horloge.stop()));
 
         // Status
         chronoLabel.setText(resourceBundle.getString("key.Disconnect"));
 
+        // CloseMenu
+        closeMenu.setOnAction(e -> {
+            horloge.stop();
+            if (chrono != null){
+            chrono.stop();
+            }
+            Platform.exit();
+        });
 
+        //AddServer open serverchoice
+        addServer.setOnAction(this::handleServerChoice);
+
+        // KeyEvent to send message
+        messageTextField.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("ENTER")) {
+                handleSendMessage(new ActionEvent());
+            }
+        });
     }
 
     private void handleConnection(ActionEvent actionEvent) {
 
         if (connectionButton.isSelected()) {
-            Matcher matcher = hostPortPattern.matcher(hostPortTextField.getText());
             if (nicknameTextField.getText().isBlank()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.NicknameAlert"), ButtonType.OK);
                 connectionButton.setSelected(false);
                 alert.showAndWait();
                 return;
             }
-            if (!matcher.matches()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.HostAlert"), ButtonType.OK);
-                connectionButton.setSelected(false);
-                alert.showAndWait();
-                return;
-            }
 
-            String host = matcher.group(1);
-            int port = (matcher.group(2) != null) ? Integer.parseInt(matcher.group(2)) : 2022;
-            System.out.printf("hôte: %s ; port: %d\n", host, port);
             chatClient = new ChatClientTCP();
-            this.connect(host, port);
-
         } else {
             connectionButton.setText("Connexion");
             this.disconnect(resourceBundle.getString("key.Disconnect"));
@@ -124,6 +118,19 @@ public class ChatClientController implements Initializable {
                 this.disconnect(resourceBundle.getString("key.Disconnect"));
             }
             messageTextField.clear();
+        }
+    }
+
+    private void handleServerChoice(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("serveurchoice.fxml"), resourceBundle);
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle(resourceBundle.getString("key.AddServer"));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
