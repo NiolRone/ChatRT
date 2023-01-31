@@ -94,10 +94,21 @@ public class ChatClientController implements Initializable {
                 alert.showAndWait();
                 return;
             }
-
             chatClient = new ChatClientTCP();
+
+            // Get the server address from the combo box
+            String serverAddress = serverComboBox.getValue().toString();
+            if (serverAddress.contains(":")){
+                String host = serverAddress.substring(0, serverAddress.indexOf(":"));
+                int port = Integer.parseInt(serverAddress.substring(serverAddress.indexOf(":")+1));
+                this.connect(host,port);
+            } else {
+                this.connect(serverAddress, 2022);
+            }
+
+
         } else {
-            connectionButton.setText("Connexion");
+            connectionButton.setText(resourceBundle.getString("key.ConnectionButtonLabel"));
             this.disconnect(resourceBundle.getString("key.Disconnect"));
 
         }
@@ -130,11 +141,20 @@ public class ChatClientController implements Initializable {
             stage.setTitle(resourceBundle.getString("key.AddServer"));
             stage.showAndWait();
             ServeurChoiceController controller = loader.getController();
-            if (serverComboBox.getItems().contains(controller.getServerText())){
+
+            //if controller.serverTextField contains ":" and ends with a letter
+            if (controller.getServerText().contains(":") && !Pattern.compile("[0-9]").matcher(controller.getServerText().substring(controller.getServerText().indexOf(":")+1)).find()){
+                Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.HostAlert"), ButtonType.OK);
+                alert.showAndWait();
+            } else if (controller.getServerText().endsWith(":")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.HostAlert"), ButtonType.OK);
+                alert.showAndWait();
+            } else if (serverComboBox.getItems().contains(controller.getServerText())){
                 Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.AddServerAlert"), ButtonType.OK);
                 alert.showAndWait();
             } else {
                 serverComboBox.getItems().add(controller.getServerText());
+                serverComboBox.setValue(controller.getServerText());
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -21,11 +21,12 @@ public class ServeurChoiceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         serverTextField.setTextFormatter(new TextFormatter<>(change -> {
-            change.setText(change.getText().replaceAll("[^a-zA-Z0-9:]", ""));
+            change.setText(change.getText().replaceAll("[^a-zA-Z0-9:.]", ""));
             return change;
         }));
 
         doneButton.disableProperty().bind(serverTextField.textProperty().isEmpty());
+
 
         razButton.setOnAction(this::handleRaz);
         doneButton.setOnAction(this::handleDone);
