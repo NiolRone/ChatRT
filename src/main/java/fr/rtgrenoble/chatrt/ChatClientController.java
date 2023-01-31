@@ -129,6 +129,13 @@ public class ChatClientController implements Initializable {
             stage.setScene(scene);
             stage.setTitle(resourceBundle.getString("key.AddServer"));
             stage.showAndWait();
+            ServeurChoiceController controller = loader.getController();
+            if (serverComboBox.getItems().contains(controller.getServerText())){
+                Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.AddServerAlert"), ButtonType.OK);
+                alert.showAndWait();
+            } else {
+                serverComboBox.getItems().add(controller.getServerText());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
