@@ -31,7 +31,7 @@ public class Chronometre implements Runnable{
             long hours = elapsedTime / 3600000;
             long minutes = (elapsedTime % 3600000) / 60000;
             long seconds = (elapsedTime % 60000) / 1000;
-            String statusChrono = String.format("Connecté à %s depuis %02d:%02d:%02d", status, hours, minutes, seconds);
+            String statusChrono = String.format("%s %s %s %02d:%02d:%02d",resourceBundle.getString("key.Connection") ,status,resourceBundle.getString("key.Since"), hours, minutes, seconds);
             Platform.runLater(() -> chronoLabel.setText(statusChrono));
         }
         Platform.runLater(() -> chronoLabel.setText(resourceBundle.getString("key.Disconnect")));

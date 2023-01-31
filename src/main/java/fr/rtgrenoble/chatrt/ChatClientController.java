@@ -70,11 +70,19 @@ public class ChatClientController implements Initializable {
         Thread t = new Thread(horloge);
         t.start();
 
-        // Clock
+        // Clock stop thread
         Platform.runLater(() -> ClockLabel.getScene().getWindow().setOnCloseRequest(e -> horloge.stop()));
 
         // Status
         chronoLabel.setText(resourceBundle.getString("key.Disconnect"));
+
+        // Deconnection if close window
+        Platform.runLater(() -> ClockLabel.getScene().getWindow().setOnCloseRequest(e -> {
+            if (chatClient != null && chatClient.isConnected()) {
+                horloge.stop();
+                disconnect(resourceBundle.getString("key.Disconnect"));
+            }
+        }));
 
 
     }
@@ -148,7 +156,6 @@ public class ChatClientController implements Initializable {
         } catch (IOException e) {
             this.disconnect("Connexion à %s:%d impossible".formatted(host, port));
         }
-
     }
 
     private void handleReceiveMessage(Observable observable) {
