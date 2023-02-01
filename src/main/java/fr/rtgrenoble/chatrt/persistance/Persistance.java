@@ -40,6 +40,8 @@ public class Persistance {
         prefs.remove("pseudo");
         // RAZ serveurs
         prefs.remove("serveurs");
+        // RAZ the server in the comboBox
+        prefs.remove("serveur_selectionnee");
 
     }
 
@@ -55,6 +57,8 @@ public class Persistance {
         }
         prefs.put("serveurs", serveurs.toString());
         // Save the server in the comboBox
-        prefs.put("serveur_selectionnee", serveursComboBox.getValue().toString());
+        if (serveursComboBox.getValue() != null) {
+            prefs.put("serveur_selectionnee", serveursComboBox.getValue().toString());
+        }
     }
 }

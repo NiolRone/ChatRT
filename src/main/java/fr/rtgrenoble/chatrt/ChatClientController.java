@@ -84,8 +84,8 @@ public class ChatClientController implements Initializable {
         Platform.runLater(() -> chatListView.getScene().getWindow().setOnCloseRequest(e -> {
             horloge.stop();
             persistance = new Persistance("EssaiPrefs", nicknameTextField, serverComboBox);
-            persistance.RAZ();
             persistance.setPreference();
+            persistance.RAZ();
             if (chatClient != null && chatClient.isConnected()) {
                 disconnect(resourceBundle.getString("key.Disconnect"));
             }
@@ -104,10 +104,10 @@ public class ChatClientController implements Initializable {
 
         // Delete configuration
         deleteConfiguration.setOnAction(e -> {
-            persistance.RAZ();
             // Clear the comboBox
             serverComboBox.getItems().clear();
             nicknameTextField.clear();
+            persistance.RAZ();
         });
     }
 
@@ -121,7 +121,6 @@ public class ChatClientController implements Initializable {
                 return;
             }
             chatClient = new ChatClientTCP();
-
             // Get the server address from the combo box
             String serverAddress = serverComboBox.getValue().toString();
             if (serverAddress.contains(":")){
@@ -135,7 +134,6 @@ public class ChatClientController implements Initializable {
         } else {
             connectionButton.setText(resourceBundle.getString("key.ConnectionButtonLabel"));
             this.disconnect(resourceBundle.getString("key.Disconnect"));
-
         }
 
 
