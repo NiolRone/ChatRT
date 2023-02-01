@@ -40,6 +40,7 @@ public class ChatClientController implements Initializable {
     public ComboBox serverComboBox;
     public MenuItem closeMenu;
     public MenuItem addServer;
+    public MenuItem deleteConfiguration;
     private ChatClient chatClient;
     private Image avatars;
     private ResourceBundle resourceBundle;
@@ -100,6 +101,14 @@ public class ChatClientController implements Initializable {
         // Load the preferences
         persistance = new Persistance("EssaiPrefs", nicknameTextField, serverComboBox);
         persistance.getPreference();
+
+        // Delete configuration
+        deleteConfiguration.setOnAction(e -> {
+            persistance.RAZ();
+            // Clear the comboBox
+            serverComboBox.getItems().clear();
+            nicknameTextField.clear();
+        });
     }
 
     private void handleConnection(ActionEvent actionEvent) {
