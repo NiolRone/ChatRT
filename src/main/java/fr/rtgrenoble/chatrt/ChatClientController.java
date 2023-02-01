@@ -83,6 +83,10 @@ public class ChatClientController implements Initializable {
                 handleSendMessage(new ActionEvent());
             }
         });
+
+        //put localhost on combobox by default
+        serverComboBox.getItems().add("localhost");
+        serverComboBox.setValue("localhost");
     }
 
     private void handleConnection(ActionEvent actionEvent) {
@@ -143,13 +147,8 @@ public class ChatClientController implements Initializable {
             ServeurChoiceController controller = loader.getController();
 
             //if controller.serverTextField contains ":" and ends with a letter
-            if (controller.getServerText().contains(":") && !Pattern.compile("[0-9]").matcher(controller.getServerText().substring(controller.getServerText().indexOf(":")+1)).find()){
-                Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.HostAlert"), ButtonType.OK);
-                alert.showAndWait();
-            } else if (controller.getServerText().endsWith(":")) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.HostAlert"), ButtonType.OK);
-                alert.showAndWait();
-            } else if (serverComboBox.getItems().contains(controller.getServerText())){
+
+            if (serverComboBox.getItems().contains(controller.getServerText())){
                 Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.AddServerAlert"), ButtonType.OK);
                 alert.showAndWait();
             } else {
