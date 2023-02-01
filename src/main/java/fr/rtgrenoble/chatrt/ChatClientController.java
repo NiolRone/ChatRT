@@ -3,6 +3,7 @@ package fr.rtgrenoble.chatrt;
 import fr.rtgrenoble.chatrt.net.ChatClient;
 import fr.rtgrenoble.chatrt.net.ChatClientTCP;
 import fr.rtgrenoble.chatrt.net.Message;
+import fr.rtgrenoble.chatrt.persistance.Persistance;
 import fr.rtgrenoble.chatrt.status.Chronometre;
 import fr.rtgrenoble.chatrt.status.Horloge;
 import javafx.application.Platform;
@@ -43,6 +44,7 @@ public class ChatClientController implements Initializable {
     private Image avatars;
     private ResourceBundle resourceBundle;
     public Chronometre chrono;
+    public Persistance persistance;
 
 
     @Override
@@ -61,9 +63,6 @@ public class ChatClientController implements Initializable {
         Thread t = new Thread(horloge);
         t.start();
 
-        // Clock stop thread
-        Platform.runLater(() -> clockLabel.getScene().getWindow().setOnCloseRequest(e -> horloge.stop()));
-
         // Status
         chronoLabel.setText(resourceBundle.getString("key.Disconnect"));
 
@@ -73,15 +72,20 @@ public class ChatClientController implements Initializable {
             if (chrono != null){
             chrono.stop();
             }
+            disconnect("key.Disconnect");
             Platform.exit();
         });
 
         //AddServer open serverchoice
         addServer.setOnAction(this::handleServerChoice);
+
         // Deconnection if close window
-        Platform.runLater(() -> clockLabel.getScene().getWindow().setOnCloseRequest(e -> {
+        Platform.runLater(() -> chatListView.getScene().getWindow().setOnCloseRequest(e -> {
+            horloge.stop();
+            persistance = new Persistance("EssaiPrefs", nicknameTextField, serverComboBox);
+            persistance.RAZ();
+            persistance.setPreference();
             if (chatClient != null && chatClient.isConnected()) {
-                horloge.stop();
                 disconnect(resourceBundle.getString("key.Disconnect"));
             }
         }));
@@ -93,9 +97,9 @@ public class ChatClientController implements Initializable {
             }
         });
 
-        //put localhost on combobox by default
-        serverComboBox.getItems().add("localhost");
-        serverComboBox.setValue("localhost");
+        // Load the preferences
+        persistance = new Persistance("EssaiPrefs", nicknameTextField, serverComboBox);
+        persistance.getPreference();
     }
 
     private void handleConnection(ActionEvent actionEvent) {
@@ -118,7 +122,6 @@ public class ChatClientController implements Initializable {
             } else {
                 this.connect(serverAddress, 2022);
             }
-
 
         } else {
             connectionButton.setText(resourceBundle.getString("key.ConnectionButtonLabel"));
