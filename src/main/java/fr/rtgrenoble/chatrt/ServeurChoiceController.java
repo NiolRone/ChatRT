@@ -56,9 +56,9 @@ public class ServeurChoiceController implements Initializable {
     private void handleDone(ActionEvent actionEvent) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("fr.rtgrenoble.chatrt.i18nBundle");
         if (serverTextField.getText().endsWith(":")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.HostAlert"), ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, resourceBundle.getString("key.ColonAlert"), ButtonType.OK);
             alert.showAndWait();
-        }else{
+        } else {
         onClose();
         }
     }
