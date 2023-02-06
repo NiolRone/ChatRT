@@ -126,6 +126,7 @@ public class ChatClientController implements Initializable {
             serverComboBox.getItems().clear();
             nicknameTextField.clear();
             persistance.RAZ();
+            contactList.setAllDeconnecte();
         });
 
         // ContactList
@@ -269,12 +270,6 @@ public class ChatClientController implements Initializable {
                 contactList.rendVisible(contact);
             }
         });
-        // Check if the contact is disconnected
-        if (chatClient.getReceivedMessage().getText().equals("QUIT")) {
-            Platform.runLater(() -> {
-                contactList.rendInvisible(contact);
-            });
-        }
     }
 
     private void disconnect(String infoMessage) {

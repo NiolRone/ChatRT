@@ -1,5 +1,7 @@
 package fr.rtgrenoble.chatrt.persistance;
 
+import fr.rtgrenoble.chatrt.contacts.Contact;
+import fr.rtgrenoble.chatrt.contacts.ContactList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import java.util.prefs.Preferences;
@@ -16,6 +18,7 @@ public class Persistance {
     private String fichierPreferences;
     private TextField nicknameTextField;
     private ComboBox serveursComboBox;
+    private ContactList contactList;
 
 
     public Persistance(String fichierPreferences, TextField nicknameTextField, ComboBox serveursComboBox){
@@ -43,7 +46,6 @@ public class Persistance {
         }
         // Get the server in the comboBox
         serveursComboBox.setValue(prefs.get("serveur_selectionnee", ""));
-
     }
     public void RAZ(){
         /**
@@ -80,4 +82,15 @@ public class Persistance {
             prefs.put("serveur_selectionnee", serveursComboBox.getValue().toString());
         }
     }
+    public void setContact(ContactList contactlist){
+        /**
+         * Save contact
+         * @param pseudo pseudo of the contact
+         * @param base64 avatar of the contact in base64
+         */
+        // Get preferences
+        this.prefs = Preferences.userRoot().node(fichierPreferences + ".prefs");
+        // Save contact
+    }
+
 }
