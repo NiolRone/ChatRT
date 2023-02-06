@@ -10,6 +10,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -41,45 +42,60 @@
           </Menu>
         </menus>
       </MenuBar>
-        <GridPane minHeight="-Infinity" vgap="5.0" VBox.vgrow="NEVER">
-            <columnConstraints>
-                <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="-Infinity" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <Label text="Serveur (IP:port) :  " GridPane.halignment="RIGHT" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                <Label minWidth="-Infinity" text="pseudo : " GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <TextField fx:id="nicknameTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                    </GridPane.margin></TextField>
-                <ToggleButton fx:id="connectionButton" maxHeight="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" text="Connexion" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <ComboBox fx:id="serverComboBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-            </children>
-        </GridPane>
-        <ListView fx:id="chatListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-        <HBox prefHeight="1.0" prefWidth="300.0">
-            <children>
-            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" minWidth="-Infinity" text="%key.MessageLabel" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </Label>
-            <TextField fx:id="messageTextField" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </TextField>
-            <Button fx:id="sendButton" mnemonicParsing="false" text="%key.SendButtonLabel" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </Button>
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS">
+         <children>
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="SOMETIMES">
+               <children>
+                    <GridPane minHeight="-Infinity" vgap="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
+                        <columnConstraints>
+                            <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="-Infinity" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                            <Label text="Serveur (IP:port) :  " GridPane.halignment="RIGHT" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                            <Label minWidth="-Infinity" text="pseudo : " GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                            <TextField fx:id="nicknameTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                                <GridPane.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                </GridPane.margin>
+                        </TextField>
+                            <ToggleButton fx:id="connectionButton" maxHeight="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" text="Connexion" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                        <ComboBox fx:id="serverComboBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        </children>
+                    </GridPane>
+                    <ListView fx:id="chatListView" layoutY="69.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="292.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="69.0" />
+                    <HBox layoutY="279.0" prefHeight="1.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <children>
+                        <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" minWidth="-Infinity" text="%key.MessageLabel" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="messageTextField" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="sendButton" mnemonicParsing="false" text="%key.SendButtonLabel" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Label text="%key.Users" />
+                  <ListView fx:id="contactListView" prefHeight="297.0" prefWidth="204.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
          </children>
       </HBox>
       <GridPane alignment="BOTTOM_CENTER" hgap="50.0" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS">

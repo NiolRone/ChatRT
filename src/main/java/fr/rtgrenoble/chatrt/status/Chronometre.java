@@ -7,17 +7,30 @@ import javafx.scene.control.Label;
 import java.util.ResourceBundle;
 
 public class Chronometre implements Runnable{
+    /*
+    * Class to manage the chronometer
+     */
+    // Attributes
     public Label chronoLabel;
     public Long startTime;
     public String status;
     public boolean stop = false;
 
     public Chronometre(Label chronoLabel, String status) {
+        /**
+        * Constructor
+        * @param chronoLabel Label to display the chronometer
+        * @param status Status of the user
+         */
         this.chronoLabel = chronoLabel;
         this.status = status;
     }
 
     public void start() {
+        /**
+         * Method to start the chronometer
+         * @return void
+         */
         ResourceBundle resourceBundle = ResourceBundle.getBundle("fr.rtgrenoble.chatrt.i18nBundle");
         startTime = System.currentTimeMillis();
         while (!stop) {
@@ -38,12 +51,20 @@ public class Chronometre implements Runnable{
     }
 
     public void stop() {
+        /**
+         * Method to stop the chronometer
+         * @return void
+         */
         stop = true;
     }
 
 
     @Override
     public void run() {
+        /**
+         * Method to run the chronometer
+         * @return void
+         */
         start();
     }
 }

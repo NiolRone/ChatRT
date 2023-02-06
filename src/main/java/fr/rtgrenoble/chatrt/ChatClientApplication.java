@@ -10,6 +10,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ChatClientApplication extends Application {
+    /**
+     * @param stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         ResourceBundle i18nBundle = ResourceBundle.getBundle("fr.rtgrenoble.chatrt.i18nBundle", Locale.getDefault());

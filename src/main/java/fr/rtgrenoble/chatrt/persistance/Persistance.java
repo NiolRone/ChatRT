@@ -6,6 +6,12 @@ import java.util.prefs.Preferences;
 
 
 public class Persistance {
+    /**
+     * Class to save and get preferences
+     * @param fichierPreferences name of the file to save preferences
+     * @param nicknameTextField TextField to save nickname
+     * @param serveursComboBox ComboBox to save serveurs
+     */
     private Preferences prefs;
     private String fichierPreferences;
     private TextField nicknameTextField;
@@ -13,6 +19,12 @@ public class Persistance {
 
 
     public Persistance(String fichierPreferences, TextField nicknameTextField, ComboBox serveursComboBox){
+        /**
+         * Constructor
+         * @param fichierPreferences name of the file to save preferences
+         * @param nicknameTextField TextField to save nickname
+         * @param serveursComboBox ComboBox to save serveurs
+         */
         this.fichierPreferences = fichierPreferences;
         this.nicknameTextField = nicknameTextField;
         this.serveursComboBox = serveursComboBox;
@@ -34,6 +46,9 @@ public class Persistance {
 
     }
     public void RAZ(){
+        /**
+         * Reset all preferences
+         */
         // Get preferences
         this.prefs = Preferences.userRoot().node(fichierPreferences + ".prefs");
         // RAZ nickname
@@ -46,6 +61,10 @@ public class Persistance {
     }
 
     public void setPreference(){
+        /**
+         * Save preferences
+         */
+
         // Get preferences
         this.prefs = Preferences.userRoot().node(fichierPreferences + ".prefs");
         // Save nickname
