@@ -4,6 +4,7 @@ import fr.rtgrenoble.chatrt.contacts.Avatar;
 import fr.rtgrenoble.chatrt.contacts.Contact;
 import fr.rtgrenoble.chatrt.contacts.ContactList;
 import fr.rtgrenoble.chatrt.net.ChatClient;
+import fr.rtgrenoble.chatrt.net.ChatClientMock;
 import fr.rtgrenoble.chatrt.net.ChatClientTCP;
 import fr.rtgrenoble.chatrt.net.Message;
 import fr.rtgrenoble.chatrt.persistance.Persistance;
@@ -149,15 +150,21 @@ public class ChatClientController implements Initializable {
                 alert.showAndWait();
                 return;
             }
-            // Initialize the chatClient
-            chatClient = new ChatClientTCP();
             // Get the server address from the combo box
             String serverAddress = serverComboBox.getValue().toString();
             if (serverAddress.contains(":")) {
                 String host = serverAddress.substring(0, serverAddress.indexOf(":"));
                 int port = Integer.parseInt(serverAddress.substring(serverAddress.indexOf(":") + 1));
+                // Initialize the chatClient
+                chatClient = new ChatClientTCP();
                 this.connect(host, port);
             } else {
+                // Initialize the chatClient and test if it's a Mock
+                if (serverAddress.equals("mock")){ // If the server is a mock
+                    chatClient = new ChatClientMock();
+                } else {
+                    chatClient = new ChatClientTCP();
+                }
                 this.connect(serverAddress, 2022);
             }
         } else {
@@ -221,9 +228,9 @@ public class ChatClientController implements Initializable {
 
     private void appendMessage(Message message) {
         /**
-        * Append a message to the chat
-        * @param message the message to append
-        */
+         * Append a message to the chat
+         * @param message the message to append
+         */
         Text datetimeText = new Text("\n%1$td/%1$tm/%1$tY %1$tH:%1$tM:%1$tS\n".formatted(new Date()));
         datetimeText.setFont(Font.font(null, FontPosture.ITALIC, 8));
         Text nicknameText = new Text(message.getFrom() + ": ");
@@ -236,11 +243,12 @@ public class ChatClientController implements Initializable {
 
     private void connect(String host, int port) {
         /**
-        Connect to the server
-        @param host the host
-        @param port the port
+         Connect to the server
+         @param host the host
+         @param port the port
          */
         try {
+            // Connect to the server
             chatClient.connect(host, port, this::handleReceiveMessage);
             // Connection successful message
             this.appendMessage(new Message("system", resourceBundle.getString("key.Connection") + "%s:%d".formatted(host, port)));
@@ -275,8 +283,8 @@ public class ChatClientController implements Initializable {
 
     private void disconnect(String infoMessage) {
         /**
-        Disconnect from the server
-        @param infoMessage the message to display
+         Disconnect from the server
+         @param infoMessage the message to display
          */
         if (chatClient.isConnected()) {
             try {
@@ -292,8 +300,8 @@ public class ChatClientController implements Initializable {
 
     private ImageView getAvatar(String nickname) {
         /**
-        Get the avatar of a user
-        @param nickname the nickname of the user
+         Get the avatar of a user
+         @param nickname the nickname of the user
          */
         ImageView imageView = new ImageView(avatars);
         double imgWidth = avatars.getWidth() / 9;
@@ -308,10 +316,10 @@ public class ChatClientController implements Initializable {
 
     private class MessageListCell extends ListCell<Message> {
         /*
-        * Custom cell for the chat
-        * Put the nickname in blue and the message in black
-        * Put the date in italic
-        * Put the avatar on the left if the message is from the user and on the right if it is from another user
+         * Custom cell for the chat
+         * Put the nickname in blue and the message in black
+         * Put the date in italic
+         * Put the avatar on the left if the message is from the user and on the right if it is from another user
          */
         @Override
         protected void updateItem(Message item, boolean empty) {
@@ -343,11 +351,12 @@ public class ChatClientController implements Initializable {
             }
         }
     }
+
     private class ContactListCell extends ListCell<Contact> {
         /*
-        * Custom cell for the contact list
-        * Put the nickname in blue
-        * Put the avatar on the left
+         * Custom cell for the contact list
+         * Put the nickname in blue
+         * Put the avatar on the left
          */
         @Override
         protected void updateItem(Contact item, boolean empty) {

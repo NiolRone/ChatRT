@@ -28,7 +28,7 @@ public class ContactList {
     }
 
     public void addContact(Contact contact) {
-        /*
+        /**
         Add a contact to the list of contacts
         @param contact: the contact to add
          */
@@ -36,7 +36,7 @@ public class ContactList {
     }
 
     public boolean estContactConnu(Contact contact) {
-        /*
+        /**
         Check if a contact is in the list of contacts
         @param contact: the contact to check
         @return: true if the contact is in the list of contacts, false otherwise
@@ -49,7 +49,7 @@ public class ContactList {
         return false;
     }
     public boolean estPseudoConnu(String pseudo) {
-        /*
+        /**
         Check if a pseudo is in the list of contacts
         @param pseudo: the pseudo to check
         @return: true if the pseudo is in the list of contacts, false otherwise
@@ -62,7 +62,7 @@ public class ContactList {
         return false;
     }
     public boolean estVisible(Contact contact) {
-        /*
+        /**
         Check if a contact is visible in the list of contacts
         @param contact: the contact to check
         @return: true if the contact is visible in the list of contacts, false otherwise
@@ -71,7 +71,7 @@ public class ContactList {
     }
 
     public Contact getContactAvecPseudo(String pseudo) {
-        /*
+        /**
         Get a contact with his pseudo
         @param pseudo: the pseudo of the contact
         @return: the contact with the pseudo given in parameter
@@ -85,7 +85,7 @@ public class ContactList {
     }
 
     public void rendVisible(Contact contact) {
-        /*
+        /**
         Make a contact visible in the list of contacts
         @param contact: the contact to make visible
          */
@@ -96,7 +96,7 @@ public class ContactList {
     }
 
     public void rendInvisible(Contact contact) {
-        /*
+        /**
         Make a contact invisible in the list of contacts
         @param contact: the contact to make invisible
          */
@@ -106,7 +106,7 @@ public class ContactList {
     }
 
     public void setConnecte(Contact contact) {
-        /*
+        /**
         Make a contact visible in the list of contacts
         @param contact: the contact to make visible
          */
@@ -118,7 +118,7 @@ public class ContactList {
     }
 
     public void setDeconnecte(Contact contact) {
-        /*
+        /**
         Make a contact invisible in the list of contacts
         @param contact: the contact to make invisible
          */
