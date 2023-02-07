@@ -4,6 +4,7 @@ module fr.rtgrenoble.chatrt {
     requires lorem;
     requires org.controlsfx.controls;
     requires java.prefs;
+    requires org.json;
 
     opens fr.rtgrenoble.chatrt to javafx.fxml;
     exports fr.rtgrenoble.chatrt;

@@ -91,6 +91,15 @@ public class Persistance {
         // Get preferences
         this.prefs = Preferences.userRoot().node(fichierPreferences + ".prefs");
         // Save contact
+        prefs.put("contact",contactlist.toString());
     }
-
+     public void RAZContact(){
+        /**
+         * Reset all contact
+         */
+        // Get preferences
+        this.prefs = Preferences.userRoot().node(fichierPreferences + ".prefs");
+        // RAZ contact
+        prefs.remove("contact");
+    }
 }

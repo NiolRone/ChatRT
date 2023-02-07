@@ -125,7 +125,6 @@ public class ChatServerTCP {
         /**
          * Boucle écho : renvoie tous les messages reçus.
          */
-
         public void echoLoop() {
             /**
              * Echo loop : send all received messages

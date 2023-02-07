@@ -72,6 +72,7 @@ public class ChatClientController implements Initializable {
 
         // Bindings
         sendButton.disableProperty().bind(connectionButton.selectedProperty().not());
+        serverComboBox.disableProperty().bind(connectionButton.selectedProperty());
 
         // Listeners
         sendButton.setOnAction(this::handleSendMessage);
@@ -126,7 +127,7 @@ public class ChatClientController implements Initializable {
             serverComboBox.getItems().clear();
             nicknameTextField.clear();
             persistance.RAZ();
-            contactList.setAllDeconnecte();
+            contactListView.getItems().clear();
         });
 
         // ContactList
